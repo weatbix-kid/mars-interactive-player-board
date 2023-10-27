@@ -1,13 +1,18 @@
 <template>
-  <div class="player-board">
-    <h1 class="text-center text-slate-100">Gen: {{ generation }}</h1>
-    <div class="flex flex-row justify-center text-slate-100">
-      <label>TR: </label>
-      <input class="w-8 mr-[-15px] bg-transparent" min="0" type="number" v-model.number="(terraformRating)">
+  <div class="px-8 py-4 m-auto max-w-7xl">
+    <div class="mb-4">
+      <div class="flex flex-row justify-center text-slate-100">
+        <label>Gen: </label>
+        <input class="w-8 ml-[5px] mr-[-15px] bg-transparent" min="0" type="number" v-model.number="(generation)">
+      </div>
+      <div class="flex flex-row justify-center text-slate-100">
+        <label>TR: </label>
+        <input class="w-8 ml-[5px] mr-[-15px] bg-transparent" min="0" type="number" v-model.number="(terraformRating)">
+      </div>
     </div>
     <div class="grid grid-cols-3 grid-rows-2 bg-opacity-50 max-w-auto bg-slate-700">
       <div class="flex flex-row justify-between border border-slate-500 max-w-10 text-slate-50" v-for="resource in resources" :key="resource.type">
-        <div class="p-2 cursor-pointer select-none md:p-10 sm:p-2" @click="updateProduction(resource.type, false)">-</div>
+        <div class="px-1 py-1 cursor-pointer select-none bg-red-600/25 sm:px-4 sm:py-6 md:px-10 md:py-7 hover:bg-red-600/100" @click="updateProduction(resource.type, false)">-</div>
         <div class="flex flex-col items-center justify-center">
           <div class="flex flex-col items-center">
             <span>{{ resource.type }}</span>
@@ -17,10 +22,10 @@
             <input class="block w-8 mr-[-15px] text-center bg-transparent" :min="resource.type === 'credits' ? -5 : 0" type="number" v-model.number="(resource.production)">
           </div>
         </div>
-        <div class="p-2 cursor-pointer select-none md:p-10" @click="updateProduction(resource.type, true)">+</div>
+        <div class="px-1 py-1 cursor-pointer select-none bg-green-600/25 sm:px-4 sm:py-6 md:px-10 md:py-7 hover:bg-green-600/100" @click="updateProduction(resource.type, true)">+</div>
       </div>
     </div>
-    <button @click="generate()" class="px-4 py-2 mt-2 font-semibold bg-transparent border rounded text-slate-100 border-slate-100 hover:bg-slate-500 hover:text-white hover:border-transparent">
+    <button @click="generate()" class="px-4 py-2 mt-4 font-semibold bg-transparent border rounded text-slate-100 border-slate-100 hover:bg-slate-100 hover:text-black hover:border-transparent">
       Generate
     </button>
   </div>
