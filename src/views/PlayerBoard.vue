@@ -16,6 +16,11 @@
         <div class="flex flex-col items-center justify-center">
           <div class="flex flex-col items-center">
             <span>{{ resource.type }}</span>
+            <div v-if="resource.cubes" class="flex w-16 my-1 justify-evenly">
+              <div v-if="resource.cubes[0] >= 1" class="flex content-center justify-center w-4 h-4 text-xs leading-1 bg-amber-400">{{ resource.cubes[0] }}</div>
+              <div v-if="resource.cubes[1] >= 1" class="flex content-center justify-center w-4 h-4 text-xs leading-1 bg-slate-400">{{ resource.cubes[1] }}</div>
+              <div v-if="resource.cubes[2] >= 1" class="flex content-center justify-center w-4 h-4 text-xs bg-orange-600 leading-1">{{ resource.cubes[2] }}</div>
+            </div>
             <input class="block w-8 mr-[-15px] text-center bg-transparent" min="0" type="number" v-model.number="(resource.amount)">
           </div>
           <div>
@@ -38,6 +43,7 @@ interface Resource {
   type: string,
   amount: number,
   production: number,
+  cubes: number[]
 }
 
 const terraformRating = ref(20);
@@ -48,31 +54,37 @@ const resources = ref<Resource[]>([
     type: 'credits',
     amount: 0,
     production: 0,
+    cubes: [3, 2, 4]
   },
   {
     type: 'steel',
     amount: 0,
     production: 0,
+    cubes: [0, 0, 0]
   },
   {
     type: 'titanium',
     amount: 0,
     production: 0,
+    cubes: [0, 0, 0]
   },
   {
     type: 'plants',
     amount: 0,
     production: 0,
+    cubes: [0, 0, 0]
   },
   {
     type: 'energy',
     amount: 0,
     production: 0,
+    cubes: [0, 0, 0]
   },
   {
     type: 'heat',
     amount: 0,
     production: 0,
+    cubes: [0, 0, 0]
   },
 ]);
 
