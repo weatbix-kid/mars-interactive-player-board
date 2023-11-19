@@ -15,7 +15,7 @@
         <div class="px-1 py-1 cursor-pointer select-none bg-red-600/25 sm:px-4 sm:py-6 md:px-10 md:py-7 hover:bg-red-600/100" @click="updateProduction(resource.type, false)">-</div>
         <div class="flex flex-col items-center justify-center">
           <div class="flex flex-col items-center">
-            <span>{{ resource.type }}</span>
+            <span @click="resource.cubes = splitResourceByDistribution(resource, distributionPercentage[0], distributionPercentage[1])">{{ resource.type }}</span>
             <div v-if="resource.cubes" class="flex w-16 my-1 justify-evenly">
               <div v-if="resource.cubes[0] >= 1" class="flex content-center justify-center w-4 h-4 text-xs leading-1 bg-amber-400">{{ resource.cubes[0] }}</div>
               <div v-if="resource.cubes[1] >= 1" class="flex content-center justify-center w-4 h-4 text-xs leading-1 bg-slate-400">{{ resource.cubes[1] }}</div>
@@ -48,13 +48,14 @@ interface Resource {
 
 const terraformRating = ref(20);
 const generation = ref(0)
+const distributionPercentage = ref([90, 10])
 
 const resources = ref<Resource[]>([
   {
     type: 'credits',
     amount: 0,
     production: 0,
-    cubes: [3, 2, 4]
+    cubes: [0, 0, 0]
   },
   {
     type: 'steel',
@@ -88,6 +89,26 @@ const resources = ref<Resource[]>([
   },
 ]);
 
+
+function splitResourceByDistribution(resource: Resource, percentage10s: number, percentage5s: number) : number[] {
+  const number = resource.amount
+
+  // Calculate the counts based on percentages
+  const tens = Math.floor((number / 10) * percentage10s / 100);
+  const fives = Math.floor((number / 5) * percentage5s / 100);
+  const ones = number - tens * 10 - fives * 5;
+
+  // Return the counts as an array
+  const distributions = [
+    tens ? tens : 0,
+    fives ? fives : 0,
+    ones ? ones : 0
+  ]
+
+  console.log(resource.type, distributions,  distributions[0]*10 + distributions[1]*5 + distributions[2]);
+  return distributions
+}
+
 function updateProduction(resourceType: string, increase: boolean): void {
   const resourceToUpdate = resources.value.find(resource => resource.type === resourceType)
   if (!resourceToUpdate) return
@@ -111,6 +132,9 @@ function generate(): void {
   for (const resource of resources.value) {
     if (resource.type === "credits") resource.amount += terraformRating.value
     resource.amount += resource.production
+
+    // recalculate resource cubes
+    resource.cubes = splitResourceByDistribution(resource, distributionPercentage.value[0], distributionPercentage.value[1])
   }
 
   generation.value += 1
