@@ -1,9 +1,17 @@
-- Ability to spend???
-  -- Projects
-    -- Power plant
-    -- Asteroid
-    -- Aquifer
-    -- Greenery
-    -- City
-  -- Cards
-    -- 1, 2, 3 or 4 (3 megacredits each)
+Implement Actions that have results such as increasing/decreasing TR or production
+
+Implement Standard Projects:
+  - Selling x amount of cards for x amount of credits (Sell Patents)
+  - Buying energy production for 11 credits (Power Plant)
+  - Increase temp for 14 credits (Asteroid)
+  - Add ocean tile for 18 credits (Aquifer)
+  - Add forest tile for 23 credits (Greenery)
+  - Add city tile and gain money production for 25 credits (City)
+
+Prompts to check below things:
+- Milestones and Awards
+- Oxygen and Temp
+
+End game calculator?
+
+Make a design that works on mobile
